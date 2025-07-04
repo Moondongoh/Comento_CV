@@ -41,10 +41,46 @@ Hugging Face 데이터셋에서이미지를가져와AI 학습을위한전처리�
 
  2. basic.py ==> food101 이미지 하나를 불러와 리사이징, 흑백화, 블러처리, 데이터 증강(좌우 변환)을 한 결과값을 얻음.
 
- 3. advanced.py ==> food101 중 5개 이미지를 사용해 is_too_dark(1), is_too_small(2), filter_images 를 사용해 
- 1번에서 이미지를 흑백변환 후 임계값(brightness_threshold=50) 보다 낮은  어두운 이미지로 판단
- 2번에서 width와 height가 각각 100보다 작으면 작은 사이즈로 판단. ==> 객체 크기라는데 이미지 안에 객체를 판단할 방법(yolo?)
+ 3. advanced.py ==> food101 
  
+=======================심화 알고리즘=======================
+
+함수명 : is_too_dark(image, brightness_threshold=30)
+
+역할: 이미지가 너무 어두운지 판단해서 필터링할지 결정합니다.
+
+동작 방식: 이미지를 흑백(Grayscale) 으로 변환합니다.
+
+픽셀 값들의 평균 밝기(mean_brightness)를 계산합니다.
+
+이 값이 brightness_threshold보다 작으면 -> 어두운 이미지로 간주해서 True 반환 (필터링 대상)
+
+예시:
+평균 밝기 25 < 임계값 30 -> True (너무 어두움 -> 제거)
+
+평균 밝기 60 > 30 -> False (적당히 밝음 -> 유지)
+
+========================================================
+
+함수명 : is_too_small_object(image, min_object_area=100)
+
+역할: 이미지 안에 충분히 큰 객체가 있는지를 판단해서, 없으면 필터링합니다.
+
+동작 방식: PIL 이미지를 OpenCV 형식으로 변환 (RGB -> BGR -> GRAY).
+
+Canny Edge Detection을 사용해 윤곽선(edge) 을 검출.
+
+cv2.findContours()로 객체의 외곽선(contour) 들을 찾습니다.
+
+각 contour의 면적을 계산해서, 하나라도 min_object_area 이상이면 -> False 반환 (필터 안 함)
+
+전부 너무 작거나 아무것도 없으면 -> True 반환 (필터링 대상)
+
+예시:
+면적 150짜리 contour 있음 -> False (충분히 큰 객체 -> 유지)
+
+모든 contour 면적 < 100 -> True (작은 것들만 있음 -> 제거)
+
 1번 or 2번에 해당되면 필터링 작업
 
 https://velog.io/@mdo0421/1%EC%A3%BC%EC%B0%A8ComentoCV 1주차 벨로그 정리
