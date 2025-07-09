@@ -1,10 +1,30 @@
 import cv2
 import numpy as np
+import os
 
-# 이미지로드
-image = cv2.imread(
-    "C:/GIT/Comento_CV/test_processing/sample3.png"
-)  # 분석할 이미지 파일
+# # 이미지로드
+# image = cv2.imread(
+#     "C:/GIT/Comento_CV/test_processing/sample3.png"
+# )  # 분석할 이미지 파일
+
+
+# 현재 파일의 절대 경로 기반으로 이미지 경로 설정
+BASE_DIR = os.path.dirname(os.path.abspath(__file__))
+image_path = os.path.join(BASE_DIR, "test_processing", "sample3.png")
+
+# 디버그: 경로 출력
+print("[DEBUG] 이미지 경로:", image_path)
+print("현재 파일 위치:", __file__)
+print("실제 이미지 경로:", image_path)
+print("이미지 존재 여부:", os.path.exists(image_path))
+
+# 이미지 로드
+image = cv2.imread(image_path)
+if image is None:
+    raise FileNotFoundError(
+        f"[ERROR] 이미지가 존재하지 않거나 열 수 없습니다: {image_path}"
+    )
+
 
 # BGR에서HSV 색상공간으로변환
 hsv = cv2.cvtColor(image, cv2.COLOR_BGR2HSV)

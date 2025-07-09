@@ -2,4 +2,8 @@ result/
 
 input_image/
 
-test_processing/    
+test_processing/ 
+
+__pycache__/
+
+.pytest_cache/
