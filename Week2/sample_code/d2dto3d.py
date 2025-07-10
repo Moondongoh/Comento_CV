@@ -53,7 +53,6 @@ plt.tight_layout()
 plt.show()
 
 
-# depth_processing.py 또는 advanced.py에 작성
 def compute_3d_points_from_image(image, num_samples=5000):
     if image is None:
         raise ValueError("이미지가 없습니다.")
