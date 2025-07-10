@@ -1,6 +1,7 @@
 import numpy as np
 import pytest
 import cv2
+from d2dto3d import compute_3d_points_from_image  # 경로에 맞게 수정
 
 
 # 샘플 함수: 가짜 깊이맵 생성
@@ -21,17 +22,26 @@ def test_generate_depth_map():
     assert isinstance(depth_map, np.ndarray), "출력 데이터 타입이 ndarray가 아닙니다."
 
 
-def test_depth_map_not_none():
+# def test_depth_map_not_none():
+#     image = np.zeros((100, 100, 3), dtype=np.uint8)
+#     depth_map = generate_depth_map(image)
+
+
+# def test_depth_map_none():
+#     image = np.zeros((100, 100, 3), dtype=np.uint8)
+#     depth_map = generate_depth_map(image)
+
+#     # fail
+#     assert depth_map is None, "일부러 실패시키기: 출력이 None이 아님"
+
+
+# 테스트 3: 3D 포인트 생성 확인
+def test_compute_3d_points_from_image():
     image = np.zeros((100, 100, 3), dtype=np.uint8)
-    depth_map = generate_depth_map(image)
-
-
-def test_depth_map_none():
-    image = np.zeros((100, 100, 3), dtype=np.uint8)
-    depth_map = generate_depth_map(image)
-
-    # 일부러 실패: None이어야 통과되게 작성
-    assert depth_map is None, "일부러 실패시키기: 출력이 None이 아님"
+    points, colors = compute_3d_points_from_image(image, num_samples=1000)
+    assert points.shape == (1000, 3)
+    assert colors.shape == (1000, 3)
+    assert np.all((colors >= 0.0) & (colors <= 1.0))
 
 
 # pytest 실행
