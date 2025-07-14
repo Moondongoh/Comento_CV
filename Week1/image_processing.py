@@ -1,3 +1,6 @@
+# Week 1: 이미지 전처리 및 시각화
+# 이 코드는 OpenCV를 사용하여 이미지에서 특정 색상을 검출하고 시각화하는 코드입니다.
+
 import cv2
 import numpy as np
 import os
