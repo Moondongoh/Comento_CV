@@ -18,11 +18,11 @@ image = cv2.imread(image_path)
 if image is None:
     raise FileNotFoundError("이미지를 불러올 수 없습니다. 경로를 확인하세요.")
 
-# ▶ Grayscale → DepthMap 생성
+# Grayscale → DepthMap 생성
 gray = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
 depth_map = cv2.applyColorMap(gray, cv2.COLORMAP_JET)
 
-# ▶ 3D 포인트 생성
+# 3D 포인트 생성
 h, w = gray.shape
 X, Y = np.meshgrid(np.arange(w), np.arange(h))
 Z = gray.astype(np.float32)
@@ -30,13 +30,13 @@ Z = gray.astype(np.float32)
 points = np.dstack((X, Y, Z)).reshape(-1, 3)  # (N, 3)
 colors = image.reshape(-1, 3) / 255.0  # RGB (0~1 정규화)
 
-# ▶ 포인트 일부 샘플링 (너무 많으면 렌더링 느려짐)
+# 포인트 일부 샘플링 (너무 많으면 렌더링 느려짐)
 num_samples = 5000
 indices = np.random.choice(len(points), size=num_samples, replace=False)
 sampled_points = points[indices]
 sampled_colors = colors[indices]
 
-# ▶ 3D 시각화
+# 3D 시각화
 fig = plt.figure(figsize=(10, 7))
 ax = fig.add_subplot(111, projection="3d")
 
