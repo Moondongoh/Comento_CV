@@ -54,3 +54,22 @@ ax.set_zlabel("Depth (Z)")
 ax.set_title("3D Point Cloud (Simulated Depth)")
 plt.tight_layout()
 plt.show()
+
+
+def compute_3d_points_from_image(image, num_samples=5000):
+    if image is None:
+        raise ValueError("이미지가 없습니다.")
+
+    gray = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
+    h, w = gray.shape
+    X, Y = np.meshgrid(np.arange(w), np.arange(h))
+    Z = gray.astype(np.float32)
+
+    points = np.dstack((X, Y, Z)).reshape(-1, 3)  # (N, 3)
+    colors = image.reshape(-1, 3) / 255.0
+
+    if len(points) < num_samples:
+        raise ValueError("샘플링할 수 있는 포인트가 부족합니다.")
+
+    indices = np.random.choice(len(points), size=num_samples, replace=False)
+    return points[indices], colors[indices]
