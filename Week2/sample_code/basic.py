@@ -1,3 +1,5 @@
+# Week 2: OpenCV를 이용한 가상의 깊이맵 생성
+
 import cv2
 import numpy as np
 import os
