@@ -21,6 +21,19 @@ def main():
         device="0",
         project="runs",
         name="cat-dog-person",
+        # 데이터 증강 하이퍼파라미터
+        hsv_h=0.015,  # 색조 변화
+        hsv_s=0.7,  # 채도 변화
+        hsv_v=0.4,  # 명도 변화
+        degrees=10.0,  # 회전
+        translate=0.1,  # 이동
+        scale=0.5,  # 확대/축소
+        shear=2.0,  # 기울이기
+        flipud=0.0,  # 상하 뒤집기 확률
+        fliplr=0.5,  # 좌우 뒤집기 확률
+        mosaic=1.0,  # 모자이크 사용
+        mixup=0.2,  # MixUp 사용
+        copy_paste=0.0,  # 복붙 증강 (Copy-Paste)
     )
 
 
