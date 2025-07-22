@@ -7,3 +7,9 @@ test_processing/
 __pycache__/
 
 .pytest_cache/
+
+image/
+
+logs/
+
+outputs/
